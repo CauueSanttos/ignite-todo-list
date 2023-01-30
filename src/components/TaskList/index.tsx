@@ -1,39 +1,75 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction, useCallback } from 'react';
+import { Task } from '../../App';
 
 import styles from './index.module.css';
 
-const TaskList: React.FC = () => {
-  return (
-    <ul className={styles.taskList}>
-        <li>
-            <div>
-                <span className={`material-symbols-outlined ${styles.icon} ${styles.iconCheck}`}>
-                    circle
-                </span>
+interface TaskListProps {
+    tasks: Task[];
+    setTasks: Dispatch<SetStateAction<Task[]>>
+}
 
-                <span>Essa tarefa teste</span>
-            </div>
+const TaskList: React.FC<TaskListProps> = ({ tasks, setTasks }) => {
+    const handleCheckTask = useCallback((index: number, checked: boolean) => {
+        const newTasks = tasks.map((task, indexMap) => {
+            if (indexMap === index) {
+                return {
+                    ...task,
+                    checked,
+                };
+            }
 
-            <span className={`material-symbols-outlined ${styles.iconTrash}`}>
-                delete
-            </span>
-        </li>
+            return task;
+        })
 
-        <li>
-            <div>
-                <span className={`material-symbols-outlined ${styles.icon} ${styles.iconChecked}`}>
-                    check_circle
-                </span>
+        setTasks([...newTasks]);
+    }, [tasks, setTasks]);
 
-                <span className={styles.textChecked}>Essa tarefa teste</span>
-            </div>
+    const handleRemoveTask = useCallback((indexTask: number) => {
+        const newTasks = tasks.filter((_, index) => index !== indexTask);
 
-            <span className={`material-symbols-outlined ${styles.iconTrash}`}>
-                delete
-            </span>
-        </li>
-    </ul>
-  );
+        setTasks([...newTasks]);
+    }, [setTasks, tasks]);
+
+    return (
+        <ul className={styles.taskList}>
+            {tasks.map((task, index) => {
+                return (
+                    <li key={index}>
+                        <div>
+                            {task.checked ? (
+                                <span 
+                                    className={`material-symbols-outlined ${styles.icon} ${styles.iconChecked}`}
+                                    onClick={() => handleCheckTask(index, !task.checked)}
+                                >
+                                    check_circle
+                                </span>
+                            ) : (
+                                <span 
+                                    className={`material-symbols-outlined ${styles.icon} ${styles.iconCheck}`}
+                                    onClick={() => handleCheckTask(index, !task.checked)}
+                                >
+                                    circle
+                                </span>
+                            )}
+
+                            <span 
+                                className={task.checked ? styles.textChecked : ''}
+                            >
+                                {task.description}
+                            </span>
+                        </div>
+
+                        <span 
+                            className={`material-symbols-outlined ${styles.iconTrash}`}
+                            onClick={() => handleRemoveTask(index)}
+                        >
+                            delete
+                        </span>
+                    </li>
+                );
+            })}
+        </ul>
+    );
 }
 
 export default TaskList;
