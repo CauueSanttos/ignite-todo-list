@@ -1,11 +1,17 @@
-import React from 'react';
-import './global.css'
 import Header from './components/Header'
+import AddTask from './components/AddTask'
+
+import styles from './App.module.css'
+import './global.css'
 
 function App() {
   return (
     <div>
       <Header />
+
+      <div className={styles.wrapper}>
+        <AddTask />
+      </div>
     </div>
   )
 }
