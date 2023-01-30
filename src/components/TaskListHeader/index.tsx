@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './index.module.css';
 
-const TaskList: React.FC = () => {
+const TaskListHeader: React.FC = () => {
   return (
     <div className={styles.taskContainer}>
         <span className={styles.title}>
@@ -20,4 +20,4 @@ const TaskList: React.FC = () => {
   );
 }
 
-export default TaskList;
+export default TaskListHeader;
