@@ -14,10 +14,7 @@
     border-radius: 8px;
     padding: 1rem;
     margin-right: 0.5rem;
-}
-
-.addTask input:focus {
-    color: var(--white);
+    color: var(--white); 
 }
 
 .addTask button {
