@@ -1,5 +1,6 @@
 import Header from './components/Header'
 import AddTask from './components/AddTask'
+import TaskList from './components/TaskList'
 
 import styles from './App.module.css'
 import './global.css'
@@ -11,6 +12,7 @@ function App() {
 
       <div className={styles.wrapper}>
         <AddTask />
+        <TaskList />
       </div>
     </div>
   )
